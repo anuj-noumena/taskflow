@@ -1,0 +1,20 @@
+# OS-generated files (Mac/Windows junk)
+.DS_Store
+Thumbs.db
+
+# VS Code settings (personal, not project-level)
+.vscode/
+
+# Log files
+*.log
+npm-debug.log*
+
+# Environment variables (NEVER commit secrets!)
+.env
+.env.local
+.env.production
+
+# We'll add this in Session 3 when we use npm
+node_modules/
+dist/
+build/
