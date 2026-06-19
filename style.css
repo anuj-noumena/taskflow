@@ -1,0 +1,464 @@
+/* =============================================
+   1. CSS VARIABLES — Our Design System
+   Define once, use everywhere.
+   Change one value here → updates the entire UI.
+============================================= */
+:root {
+    --primary:       #6366f1;   /* indigo — main brand colour */
+    --primary-dark:  #4f46e5;   /* darker shade for hover states */
+    --bg:            #0f172a;   /* dark navy — page background */
+    --surface:       #1e293b;   /* card background — slightly lighter */
+    --surface-2:     #334155;   /* slightly lighter surface for badges */
+    --text:          #f8fafc;   /* near white — main text */
+    --text-muted:    #94a3b8;   /* grey text — secondary info */
+    --border:        #334155;   /* subtle borders */
+    --success:       #22c55e;   /* green — low priority / done */
+    --warning:       #f59e0b;   /* amber — medium priority */
+    --danger:        #ef4444;   /* red — high priority / delete */
+    --radius:        10px;      /* consistent border radius */
+    --shadow:        0 4px 20px rgba(0, 0, 0, 0.3);   /* card shadow */
+
+    /* Using variables later looks like this: */
+    /* color: var(--primary); */
+    /* background: var(--surface); */
+}
+
+/* =============================================
+   2. RESET — Remove browser default styles
+   Different browsers have different defaults.
+   We zero them out for a consistent starting point.
+============================================= */
+* {
+    margin: 0;           /* remove default margins (e.g. on h1, p, body) */
+    padding: 0;          /* remove default paddings */
+    box-sizing: border-box;
+    /* border-box: padding is included inside declared width/height */
+    /* Without this, a 300px div with 20px padding becomes 340px wide */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Font stack: browser tries each font left to right */
+    /* sans-serif is a generic fallback that always exists */
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;    /* page fills at least the full screen height */
+    line-height: 1.6;     /* 1.6x the font size — makes text easier to read */
+}
+
+/* =============================================
+   3. HEADER
+============================================= */
+.header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 40px;
+    /* padding: top/bottom left/right (shorthand) */
+    /* Same as: padding-top: 20px; padding-right: 40px; etc. */
+}
+
+.header-content {
+    max-width: 1200px;    /* content never gets too wide on large screens */
+    margin: 0 auto;       /* 0 top/bottom, auto left/right = centered horizontally */
+    display: flex;        /* Flexbox: arrange children side by side */
+    align-items: center;  /* vertically center the logo and tagline */
+    gap: 20px;            /* space between flex children */
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 800;       /* 800 = extra-bold (400 is normal, 700 is bold) */
+    color: var(--primary);
+    letter-spacing: -0.5px; /* slightly tighten the letters for large text */
+}
+
+.tagline {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* =============================================
+   4. MAIN LAYOUT — CSS GRID
+   Think of Grid as a table: define rows/columns,
+   then place items into cells.
+============================================= */
+.main {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    /* 360px = fixed width for the form column */
+    /* 1fr   = "one fraction" = take ALL remaining space */
+
+    /* If we had 3 columns: grid-template-columns: 200px 1fr 2fr */
+    /* That would be: 200px fixed | 1 part of remaining | 2 parts of remaining */
+
+    gap: 30px;            /* space between grid cells (replaces grid-gap) */
+    align-items: start;   /* don't stretch columns to match height */
+}
+
+/* Flexbox vs Grid — when to use which:
+   - Use Flexbox for 1D layouts: a row of buttons, a nav bar, items in a line
+   - Use Grid for 2D layouts: page structure, card grids, form-and-board layout
+*/
+
+/* Quick Flexbox reference:
+   display: flex                → enable flexbox
+   flex-direction: row          → children go left-to-right (default)
+   flex-direction: column       → children go top-to-bottom
+   justify-content: flex-start  → align along the MAIN axis (horizontal by default)
+   justify-content: center      → center on main axis
+   justify-content: space-between → spread items apart
+   align-items: flex-start      → align along the CROSS axis (vertical by default)
+   align-items: center          → center vertically
+   gap: 16px                    → space between children
+   flex: 1                      → child takes all remaining space
+   flex-shrink: 0               → child doesn't shrink even if space is tight
+*/
+
+/* =============================================
+   5. FORM SECTION
+============================================= */
+.form-section {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow);
+    position: sticky;
+    /* sticky: element scrolls normally UNTIL it hits 'top' value */
+    /* then it "sticks" in place while the rest of the page scrolls */
+    top: 20px;
+}
+
+.form-section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+/* --- Form Groups --- */
+.form-group {
+    display: flex;
+    flex-direction: column;  /* label on top, input below */
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;   /* converts text to ALL CAPS in CSS */
+    letter-spacing: 0.6px;       /* spread letters slightly — common for small labels */
+}
+
+/* --- Inputs, Textarea, Select ---
+   We group them together because they share all the same styles.
+   This is CSS grouping — avoids repeating rules three times.
+*/
+.form-group input,
+.form-group textarea,
+.form-group select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    /* inherit: take the font-family from the parent (body) */
+    /* Without this, textarea and select use the browser's default font */
+    outline: none;
+    /* outline: none removes the browser's default blue focus ring */
+    /* We replace it with our own custom ring below */
+    transition: border-color 0.2s;
+    /* transition: property duration timing-function */
+    /* Makes the border colour change animate over 0.2 seconds */
+    resize: none;   /* prevents textarea from being dragged to resize */
+}
+
+/* :focus is a pseudo-class — activates when the element has keyboard focus */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--primary);
+    /* box-shadow: offset-x offset-y blur spread colour */
+    /* 0 0 0 3px = no offset, no blur, 3px of spread → a solid ring */
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* --- Two columns inside the form --- */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;   /* two equal columns */
+    gap: 12px;
+}
+
+/* --- Submit Button --- */
+.btn-primary {
+    width: 100%;   /* stretch to fill the form width */
+    padding: 12px;
+    background: var(--primary);
+    color: white;
+    border: none;   /* remove the default browser button border */
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;   /* show hand cursor on hover — signals "this is clickable" */
+    transition: background 0.2s, transform 0.1s;
+    /* Transition multiple properties: separate with commas */
+    margin-top: 4px;
+}
+
+/* :hover activates when the mouse is over the element */
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+/* :active activates while the mouse button is held down — gives a "press" feel */
+.btn-primary:active {
+    transform: scale(0.98);
+    /* scale(0.98) makes the button 98% of its size — a subtle press effect */
+}
+
+/* =============================================
+   6. BOARD SECTION
+============================================= */
+.board-header {
+    display: flex;
+    justify-content: space-between;   /* h2 left, filters right */
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.board-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* --- Filter Buttons --- */
+.filters {
+    display: flex;
+    gap: 8px;
+}
+
+.filter-btn {
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    background: transparent;   /* no background by default */
+    color: var(--text-muted);
+    border-radius: 20px;       /* 20px+ on a short element = pill shape */
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+    /* 'all' transitions EVERY animatable property — use cautiously */
+    /* Better to name specific properties in production */
+}
+
+.filter-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* .active class is toggled by JavaScript */
+.filter-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+/* =============================================
+   7. TASK BOARD — Flexbox Column
+============================================= */
+.task-board {
+    display: flex;
+    flex-direction: column;   /* stack task cards vertically */
+    gap: 14px;
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 60px 20px;
+    font-size: 15px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 2px dashed var(--border);
+    /* dashed border gives a visual "drop zone" feel */
+}
+
+/* =============================================
+   8. TASK CARD
+============================================= */
+.task-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;   /* align to top (not center) — content may be tall */
+    gap: 16px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--primary);   /* coloured left accent bar */
+    animation: slideIn 0.3s ease;
+    /* animation: name duration timing-function */
+    /* slideIn is defined in the @keyframes block below */
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task-card:hover {
+    transform: translateY(-3px);
+    /* translateY(-3px) moves the card 3px upward — a lift effect */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    /* stronger shadow when lifted gives depth perception */
+}
+
+/* Priority-based left border colours */
+/* JavaScript adds these classes dynamically: class="task-card priority-high" */
+.task-card.priority-high   { border-left-color: var(--danger); }
+.task-card.priority-medium { border-left-color: var(--warning); }
+.task-card.priority-low    { border-left-color: var(--success); }
+
+/* Strike-through title when task is Done */
+/* JavaScript adds status-done class: class="task-card priority-high status-done" */
+.task-card.status-done .task-title {
+    text-decoration: line-through;   /* strikethrough effect */
+    color: var(--text-muted);        /* dim the text too */
+}
+
+/* --- Card Content --- */
+.task-info {
+    flex: 1;   /* takes all available space, pushing the delete button to the right */
+}
+
+.task-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.task-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    line-height: 1.6;
+}
+
+/* --- Meta Badges --- */
+.task-meta {
+    display: flex;
+    flex-wrap: wrap;   /* wrap to next line if badges don't fit */
+    gap: 8px;
+}
+
+.badge {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* rgba(r, g, b, alpha) — alpha is transparency: 0 = invisible, 1 = solid */
+/* Using a semi-transparent background tints the badge with the priority colour */
+.badge-priority-high   { background: rgba(239, 68,  68,  0.15); color: var(--danger); }
+.badge-priority-medium { background: rgba(245, 158, 11,  0.15); color: var(--warning); }
+.badge-priority-low    { background: rgba(34,  197, 94,  0.15); color: var(--success); }
+.badge-status          { background: var(--surface-2); color: var(--text-muted); }
+
+/* --- Delete Button --- */
+.task-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+    /* flex-shrink: 0 — this element will NOT shrink even if the row is cramped */
+    /* By default flex children shrink when space is tight */
+}
+
+.btn-delete {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s;
+    white-space: nowrap;   /* prevent "🗑 Delete" from wrapping to two lines */
+}
+
+.btn-delete:hover {
+    background: rgba(239, 68, 68, 0.25);
+}
+
+/* =============================================
+   9. ANIMATION
+   @keyframes defines reusable animation sequences.
+   "from" = starting state, "to" = ending state.
+   You can also use percentages: 0%, 50%, 100%
+============================================= */
+@keyframes slideIn {
+    from {
+        opacity: 0;                    /* fully transparent */
+        transform: translateY(-10px);  /* 10px above final position */
+    }
+    to {
+        opacity: 1;         /* fully visible */
+        transform: translateY(0);      /* final position */
+    }
+}
+
+/* Example with multiple keyframe stops: */
+@keyframes pulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+/* Usage: animation: pulse 2s infinite; — loops forever */
+
+/* =============================================
+   10. RESPONSIVE — Mobile (max 768px)
+   Media queries apply styles ONLY when conditions are met.
+   max-width: 768px means "screens 768px wide or narrower"
+============================================= */
+@media (max-width: 768px) {
+    .main {
+        grid-template-columns: 1fr;   /* collapse to single column on mobile */
+        padding: 0 16px;
+        margin: 20px auto;
+    }
+
+    .form-section {
+        position: static;   /* remove sticky behaviour on mobile — not needed */
+    }
+
+    .board-header {
+        flex-direction: column;    /* stack header and filters vertically */
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .filters {
+        flex-wrap: wrap;   /* allow filter buttons to wrap to next line */
+    }
+
+    .task-card {
+        flex-direction: column;   /* stack card content and delete button */
+    }
+}
+
+/* Additional breakpoint for very large screens */
+@media (min-width: 1400px) {
+    .main {
+        max-width: 1400px;   /* allow wider layout on big monitors */
+    }
+}

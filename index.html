@@ -2,13 +2,94 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskFlow — Manage Your Tasks</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
+    <!-- ============================
+         HEADER
+    ============================= -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">⚡ TaskFlow</h1>
+            <p class="tagline">Manage your tasks. Ship your work.</p>
+        </div>
+    </header>
+
+    <!-- ============================
+         MAIN LAYOUT
+    ============================= -->
+    <main class="main">
+
+        <!-- LEFT: Add Task Form -->
+        <section class="form-section">
+            <h2>Add New Task</h2>
+            <form id="taskForm" class="task-form">
+
+                <div class="form-group">
+                    <label for="taskTitle">Task Title *</label>
+                    <input type="text" id="taskTitle" placeholder="e.g. Build login page" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="taskDesc">Description</label>
+                    <textarea id="taskDesc" placeholder="What needs to be done?" rows="3"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="taskPriority">Priority</label>
+                        <select id="taskPriority">
+                            <option value="low">🟢 Low</option>
+                            <option value="medium" selected>🟡 Medium</option>
+                            <option value="high">🔴 High</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="taskStatus">Status</label>
+                        <select id="taskStatus">
+                            <option value="todo" selected>📋 To Do</option>
+                            <option value="inprogress">⚙️ In Progress</option>
+                            <option value="done">✅ Done</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">+ Add Task</button>
+
+            </form>
+        </section>
+
+        <!-- RIGHT: Task Board -->
+        <section class="board-section">
+
+            <div class="board-header">
+                <h2>Task Board</h2>
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="todo">To Do</button>
+                    <button class="filter-btn" data-filter="inprogress">In Progress</button>
+                    <button class="filter-btn" data-filter="done">Done</button>
+                </div>
+            </div>
+
+            <!-- Tasks are injected here by JavaScript -->
+            <div id="taskBoard" class="task-board">
+                <p class="empty-state">No tasks yet. Add your first task! 🚀</p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Script at bottom: HTML loads first, THEN JavaScript runs -->
+    <!-- If script were in <head>, JS would run before elements exist -->
+    <script src="script.js"></script>
 </body>
 
 </html>
